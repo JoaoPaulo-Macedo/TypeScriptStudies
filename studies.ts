@@ -51,14 +51,15 @@ console.log('reduce-------------------');
 console.log(list1.reduce(sum));
 console.log(list1.reduce(mult));
 console.log(list2.reduce(sum, 0));
-console.log(list2.reduce(mult, 0));
+console.log(list2.reduce(mult, 1));
+//if array is empty, it will crash, for this not to happen, put a default starting value. In case of sum/sub is number 0, in case of mult/div is number 1. 
 
 //sort:
 function sortNumber(x : number, y : number) : number {
   return y - x;
 }
 function sortString(x : string, y : string) : number {
-  return y.length - x.length;
+  return x.length - y.length;
 }
 
 console.log('sort-------------------');
@@ -66,3 +67,5 @@ console.log(list1.sort(sortNumber));
 console.log(list3.sort(sortString));
 console.log(list1.sort((x, y) => x - y));
 console.log(list1.sort((x, y) => y - x));
+console.log(list3.sort()); 
+//the default sorting for strings, by first character
