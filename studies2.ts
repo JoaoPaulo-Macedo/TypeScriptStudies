@@ -122,4 +122,27 @@ const genreCircleBarResult = (results : PollResult[]) => {
 
 console.log('Genre===========================================================');
 console.log(genreCircleBarResult(recordItemList));
+
+const genreCircleBarResult2 = (results : PollResult[]) => {
+
+  const computeRecordItems = (obj, record : PollResult) => {
+    if(obj[record.gameGenre] !== undefined) obj[record.gameGenre]++;
+    else obj[record.gameGenre] = 1;
+
+    return obj;
+  }
+
+  const genreByAmount = results.reduce(computeRecordItems, {});
+
+  const labels = Object.keys(genreByAmount);
+  const series = labels.map(x => genreByAmount[x]);
+
+  return {
+    labels,
+    series,
+  }
+}
+
+console.log('Genre===========================================================');
+console.log(genreCircleBarResult2(recordItemList));
 console.log('================================================================');

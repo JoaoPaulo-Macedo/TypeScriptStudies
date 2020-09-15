@@ -88,4 +88,22 @@ var genreCircleBarResult = function (results) {
 };
 console.log('Genre===========================================================');
 console.log(genreCircleBarResult(recordItemList));
+var genreCircleBarResult2 = function (results) {
+    var computeRecordItems = function (obj, record) {
+        if (obj[record.gameGenre] !== undefined)
+            obj[record.gameGenre]++;
+        else
+            obj[record.gameGenre] = 1;
+        return obj;
+    };
+    var genreByAmount = results.reduce(computeRecordItems, {});
+    var labels = Object.keys(genreByAmount);
+    var series = labels.map(function (x) { return genreByAmount[x]; });
+    return {
+        labels: labels,
+        series: series
+    };
+};
+console.log('Genre===========================================================');
+console.log(genreCircleBarResult2(recordItemList));
 console.log('================================================================');
