@@ -2,7 +2,7 @@ export {}
 
 type Platform = 'XBOX' | 'PC' | 'PLAYSTATION';//Enum
 
-type RecordItem = {
+type PollResult = {
   gameTitle: string;
   gamePlatform: Platform,
   genreName: string;
@@ -32,7 +32,7 @@ const gameList : Game[] = [
   }
 ]
 
-const recordItemList : RecordItem[] = [
+const recordItemList : PollResult[] = [
   {
     "gameTitle": "The Witcher 3",
     "gamePlatform": "PLAYSTATION",
@@ -60,8 +60,10 @@ const recordItemList : RecordItem[] = [
   },
 ]
 
-const buildBarSeries = (games : Game[], records : RecordItem[]) => {
+const buildBarResult = (games : Game[], records : PollResult[]) => {
+
   const mappedGames = games.map((game) => {
+
     const filteredGames = records.filter((record) => {
       return record.gameTitle === game.title && record.gamePlatform === game.platform;
     });
@@ -70,9 +72,35 @@ const buildBarSeries = (games : Game[], records : RecordItem[]) => {
       x: `${game.title} | ${game.platform}`,
       y: filteredGames.length,
     }
+
   });
   
   return mappedGames.sort((a, b) : number => {return b.y - a.y;}).slice(0, 8);
 }
 
-console.log(buildBarSeries(gameList, recordItemList));
+console.log('Bar===================================');
+console.log(buildBarResult(gameList, recordItemList));
+console.log('Bar===================================');
+
+const buildCircleBarResult = (records : PollResult[]) => {
+
+  const platforms = ['PC', 'PLAYSTATION', 'XBOX'];
+
+  const series = platforms.map((platform) => {
+    
+    const filteredGames = records.filter((item) => {
+      return platform === item.gamePlatform;
+    });
+
+    return filteredGames.length;
+  });
+
+  return {
+    labels : platforms,
+    series,
+  };
+}
+
+console.log('Circle================================');
+console.log(buildCircleBarResult(recordItemList));
+console.log('Circle================================');

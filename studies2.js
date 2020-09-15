@@ -44,7 +44,7 @@ var recordItemList = [
         "genreName": "RPG"
     },
 ];
-var buildBarSeries = function (games, records) {
+var buildBarResult = function (games, records) {
     var mappedGames = games.map(function (game) {
         var filteredGames = records.filter(function (record) {
             return record.gameTitle === game.title && record.gamePlatform === game.platform;
@@ -56,4 +56,22 @@ var buildBarSeries = function (games, records) {
     });
     return mappedGames.sort(function (a, b) { return b.y - a.y; }).slice(0, 8);
 };
-console.log(buildBarSeries(gameList, recordItemList));
+console.log('Bar===================================');
+console.log(buildBarResult(gameList, recordItemList));
+console.log('Bar===================================');
+var buildCircleBarResult = function (records) {
+    var platforms = ['PC', 'PLAYSTATION', 'XBOX'];
+    var series = platforms.map(function (platform) {
+        var filteredGames = records.filter(function (item) {
+            return platform === item.gamePlatform;
+        });
+        return filteredGames.length;
+    });
+    return {
+        labels: platforms,
+        series: series
+    };
+};
+console.log('Circle================================');
+console.log(buildCircleBarResult(recordItemList));
+console.log('Circle================================');
