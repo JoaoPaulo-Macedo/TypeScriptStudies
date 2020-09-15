@@ -5,7 +5,7 @@ type Platform = 'XBOX' | 'PC' | 'PLAYSTATION';//Enum
 type PollResult = {
   gameTitle: string;
   gamePlatform: Platform,
-  genreName: string;
+  gameGenre: string;
 }
 
 type Game = {
@@ -36,31 +36,31 @@ const recordItemList : PollResult[] = [
   {
     "gameTitle": "The Witcher 3",
     "gamePlatform": "PLAYSTATION",
-    "genreName": "RPG"
+    "gameGenre": "RPG"
   },
   {
     "gameTitle": "The Witcher 3",
     "gamePlatform": "XBOX",
-    "genreName": "RPG"
+    "gameGenre": "RPG"
   },
   {
     "gameTitle": "Overwatch",
     "gamePlatform": "PC",
-    "genreName": "Shooter"
+    "gameGenre": "Shooter"
   },
   {
     "gameTitle": "Overwatch",
     "gamePlatform": "PC",
-    "genreName": "Shooter"
+    "gameGenre": "Shooter"
   },
   {
     "gameTitle": "The Witcher 3",
     "gamePlatform": "PLAYSTATION",
-    "genreName": "RPG"
+    "gameGenre": "RPG"
   },
 ]
 
-const buildBarResult = (games : Game[], records : PollResult[]) => {
+const gamesBarResult = (games : Game[], records : PollResult[]) => {
 
   const mappedGames = games.map((game) => {
 
@@ -78,11 +78,10 @@ const buildBarResult = (games : Game[], records : PollResult[]) => {
   return mappedGames.sort((a, b) : number => {return b.y - a.y;}).slice(0, 8);
 }
 
-console.log('Bar===================================');
-console.log(buildBarResult(gameList, recordItemList));
-console.log('Bar===================================');
+console.log('Games===========================================================');
+console.log(gamesBarResult(gameList, recordItemList));
 
-const buildCircleBarResult = (records : PollResult[]) => {
+const platformCircleBarResult = (records : PollResult[]) => {
 
   const platforms = ['PC', 'PLAYSTATION', 'XBOX'];
 
@@ -101,6 +100,26 @@ const buildCircleBarResult = (records : PollResult[]) => {
   };
 }
 
-console.log('Circle================================');
-console.log(buildCircleBarResult(recordItemList));
-console.log('Circle================================');
+console.log('Platform========================================================');
+console.log(platformCircleBarResult(recordItemList));
+
+const genreCircleBarResult = (results : PollResult[]) => {
+  const genre = ['Shooter', 'RPG'];
+
+  const series = genre.map((genre) => {
+    const filteredGames = results.filter((result) => {
+      return genre === result.gameGenre
+    });
+
+    return filteredGames.length;
+  });
+
+  return {
+    labels: genre,
+    series,
+  }
+}
+
+console.log('Genre===========================================================');
+console.log(genreCircleBarResult(recordItemList));
+console.log('================================================================');

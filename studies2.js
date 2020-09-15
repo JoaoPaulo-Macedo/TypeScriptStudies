@@ -21,30 +21,30 @@ var recordItemList = [
     {
         "gameTitle": "The Witcher 3",
         "gamePlatform": "PLAYSTATION",
-        "genreName": "RPG"
+        "gameGenre": "RPG"
     },
     {
         "gameTitle": "The Witcher 3",
         "gamePlatform": "XBOX",
-        "genreName": "RPG"
+        "gameGenre": "RPG"
     },
     {
         "gameTitle": "Overwatch",
         "gamePlatform": "PC",
-        "genreName": "Shooter"
+        "gameGenre": "Shooter"
     },
     {
         "gameTitle": "Overwatch",
         "gamePlatform": "PC",
-        "genreName": "Shooter"
+        "gameGenre": "Shooter"
     },
     {
         "gameTitle": "The Witcher 3",
         "gamePlatform": "PLAYSTATION",
-        "genreName": "RPG"
+        "gameGenre": "RPG"
     },
 ];
-var buildBarResult = function (games, records) {
+var gamesBarResult = function (games, records) {
     var mappedGames = games.map(function (game) {
         var filteredGames = records.filter(function (record) {
             return record.gameTitle === game.title && record.gamePlatform === game.platform;
@@ -56,10 +56,9 @@ var buildBarResult = function (games, records) {
     });
     return mappedGames.sort(function (a, b) { return b.y - a.y; }).slice(0, 8);
 };
-console.log('Bar===================================');
-console.log(buildBarResult(gameList, recordItemList));
-console.log('Bar===================================');
-var buildCircleBarResult = function (records) {
+console.log('Games===========================================================');
+console.log(gamesBarResult(gameList, recordItemList));
+var platformCircleBarResult = function (records) {
     var platforms = ['PC', 'PLAYSTATION', 'XBOX'];
     var series = platforms.map(function (platform) {
         var filteredGames = records.filter(function (item) {
@@ -72,6 +71,21 @@ var buildCircleBarResult = function (records) {
         series: series
     };
 };
-console.log('Circle================================');
-console.log(buildCircleBarResult(recordItemList));
-console.log('Circle================================');
+console.log('Platform========================================================');
+console.log(platformCircleBarResult(recordItemList));
+var genreCircleBarResult = function (results) {
+    var genre = ['Shooter', 'RPG'];
+    var series = genre.map(function (genre) {
+        var filteredGames = results.filter(function (result) {
+            return genre === result.gameGenre;
+        });
+        return filteredGames.length;
+    });
+    return {
+        labels: genre,
+        series: series
+    };
+};
+console.log('Genre===========================================================');
+console.log(genreCircleBarResult(recordItemList));
+console.log('================================================================');
