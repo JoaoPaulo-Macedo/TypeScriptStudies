@@ -60,11 +60,19 @@ const recordItemList : RecordItem[] = [
   },
 ]
 
-const mappedGames = gameList.map(game => {
-  return {
-    x: `${game.title} | ${game.platform}`,
-    y: 0,
-  }
-});
+const buildBarSeries = (games : Game[], records : RecordItem[]) => {
+  const mappedGames = games.map((game) => {
+    const filteredGames = records.filter((record) => {
+      return record.gameTitle === game.title && record.gamePlatform === game.platform;
+    });
 
-console.log(mappedGames);
+    return {
+      x: `${game.title} | ${game.platform}`,
+      y: filteredGames.length,
+    }
+  });
+  
+  return mappedGames.sort((a, b) : number => {return b.y - a.y;}).slice(0, 8);
+}
+
+console.log(buildBarSeries(gameList, recordItemList));

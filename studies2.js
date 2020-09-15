@@ -44,10 +44,16 @@ var recordItemList = [
         "genreName": "RPG"
     },
 ];
-var mappedGames = gameList.map(function (game) {
-    return {
-        x: game.title + " | " + game.platform,
-        y: 0
-    };
-});
-console.log(mappedGames);
+var buildBarSeries = function (games, records) {
+    var mappedGames = games.map(function (game) {
+        var filteredGames = records.filter(function (record) {
+            return record.gameTitle === game.title && record.gamePlatform === game.platform;
+        });
+        return {
+            x: game.title + " | " + game.platform,
+            y: filteredGames.length
+        };
+    });
+    return mappedGames.sort(function (a, b) { return b.y - a.y; }).slice(0, 8);
+};
+console.log(buildBarSeries(gameList, recordItemList));
